@@ -240,12 +240,11 @@ def dowload_video(original_movie_url: str, project_dir: str, project_code: str):
 
 
 def create_frame(project_dir: str, project_code: str, frame_path: str, frame_skip: int):
-    print('frame_skip' + str(frame_skip))
     video_project_path = os.path.join(project_dir, project_code)
     video_path = os.path.join(video_project_path, "video.mp4")
     video_capture = cv2.VideoCapture(video_path)
     # Initialize frame counter and frame skip
-    count = 0
+    count:int = 0
     frame_count = 0
 
     # Create output directory if it does not exist
@@ -278,7 +277,7 @@ def create_frame(project_dir: str, project_code: str, frame_path: str, frame_ski
         print('Error in create frames')
     print('Finish create frames')
 
-def rec_animation_stage1(dbg, project_args, frame_skip, frame_width: int, frame_height: int, st1_masking_method_index, st1_mask_threshold, tb_use_fast_mode, tb_use_jit, clipseg_mask_prompt, clipseg_exclude_prompt, clipseg_mask_threshold, clipseg_mask_blur_size, clipseg_mask_blur_size2, is_invert_mask):
+def rec_animation_stage1(dbg, project_args, frame_skip: int, frame_width: int, frame_height: int, st1_masking_method_index, st1_mask_threshold, tb_use_fast_mode, tb_use_jit, clipseg_mask_prompt, clipseg_exclude_prompt, clipseg_mask_threshold, clipseg_mask_blur_size, clipseg_mask_blur_size2, is_invert_mask):
     dbg.print("stage1")
 
     if st1_masking_method_index == 1 and (not clipseg_mask_prompt):
