@@ -43,7 +43,8 @@ def rec_animation_process(stage_index: int,project_code:str, project_dir:str,ori
 
     if not os.path.isdir(project_dir):
         dbg.print("{0} project_dir not found".format(project_dir))
-        return process_end( dbg, info )
+        os.makedirs(project_dir)
+        # return process_end( dbg, info )
 
     # if not os.path.isfile(original_movie_path):
     #     dbg.print("{0} original_movie_path not found".format(original_movie_path))
