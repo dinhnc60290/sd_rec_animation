@@ -22,3 +22,17 @@ if not launch.is_installed("seaborn"):
 if not launch.is_installed("color_matcher"):
     launch.run_pip("install color-matcher", "requirements for Ebsynth Utility")
 
+if not launch.is_installed("pytube"):
+    launch.run_pip("install pytube", "requirements for Rec Animation")
+
+if not launch.is_installed("pyquery"):
+    launch.run_pip("install pyquery", "requirements for Rec Animation")
+
+if not launch.is_installed("imageio-ffmpeg"):
+    launch.run_pip("install imageio-ffmpeg", "requirements for Rec Animation")
+
+if not launch.is_installed("moviepy"):
+    launch.run_pip("install moviepy", "requirements for Rec Animation")
+
+
+

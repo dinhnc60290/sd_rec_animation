@@ -30,7 +30,7 @@ class debug_string:
     def to_string(self):
         return self.txt
 
-def rec_animation_process(stage_index: int,project_code:str, project_dir:str,original_movie_url:str, original_movie_path:str, frame_width:int, frame_height:int, st1_masking_method_index:int, st1_mask_threshold:float, tb_use_fast_mode:bool, tb_use_jit:bool, clipseg_mask_prompt:str, clipseg_exclude_prompt:str, clipseg_mask_threshold:int, clipseg_mask_blur_size:int, clipseg_mask_blur_size2:int, key_min_gap:int, key_max_gap:int, key_th:float, key_add_last_frame:bool, color_matcher_method:str, st3_5_use_mask:bool, st3_5_use_mask_ref:bool, st3_5_use_mask_org:bool, color_matcher_ref_type:int, color_matcher_ref_image:Image, blend_rate:float, export_type:str, bg_src:str, bg_type:str, mask_blur_size:int, mask_threshold:float, fg_transparency:float, mask_mode:str):
+def rec_animation_process(stage_index: int,project_code:str, project_dir:str,original_movie_url:str, original_movie_path:str,frame_skip:int, frame_width:int, frame_height:int, st1_masking_method_index:int, st1_mask_threshold:float, tb_use_fast_mode:bool, tb_use_jit:bool, clipseg_mask_prompt:str, clipseg_exclude_prompt:str, clipseg_mask_threshold:int, clipseg_mask_blur_size:int, clipseg_mask_blur_size2:int, key_min_gap:int, key_max_gap:int, key_th:float, key_add_last_frame:bool, color_matcher_method:str, st3_5_use_mask:bool, st3_5_use_mask_ref:bool, st3_5_use_mask_org:bool, color_matcher_ref_type:int, color_matcher_ref_image:Image, blend_rate:float, export_type:str, bg_src:str, bg_type:str, mask_blur_size:int, mask_threshold:float, fg_transparency:float, mask_mode:str):
     
     args = locals()
     info = ""
@@ -53,11 +53,11 @@ def rec_animation_process(stage_index: int,project_code:str, project_dir:str,ori
     if mask_mode == "Invert":
         is_invert_mask = True
 
-    frame_path = os.path.join(project_dir , "video_frame")
-    frame_mask_path = os.path.join(project_dir, "video_mask")
+    frame_path = os.path.join(project_dir, project_code , "video_frame")
+    frame_mask_path = os.path.join(project_dir, project_code, "video_mask")
 
     if is_invert_mask:
-        inv_path = os.path.join(project_dir, "inv")
+        inv_path = os.path.join(project_dir, project_code, "inv")
         os.makedirs(inv_path, exist_ok=True)
 
         org_key_path = os.path.join(inv_path, "video_key")
@@ -76,7 +76,7 @@ def rec_animation_process(stage_index: int,project_code:str, project_dir:str,ori
 
 
     if stage_index == 0:
-        rec_animation_stage1(dbg, project_args, frame_width, frame_height, st1_masking_method_index, st1_mask_threshold, tb_use_fast_mode, tb_use_jit, clipseg_mask_prompt, clipseg_exclude_prompt, clipseg_mask_threshold, clipseg_mask_blur_size, clipseg_mask_blur_size2, is_invert_mask)
+        rec_animation_stage1(dbg, project_args,frame_skip, frame_width, frame_height, st1_masking_method_index, st1_mask_threshold, tb_use_fast_mode, tb_use_jit, clipseg_mask_prompt, clipseg_exclude_prompt, clipseg_mask_threshold, clipseg_mask_blur_size, clipseg_mask_blur_size2, is_invert_mask)
         if is_invert_mask:
             inv_mask_path = os.path.join(inv_path, "inv_video_mask")
             ebsynth_utility_stage1_invert(dbg, frame_mask_path, inv_mask_path)

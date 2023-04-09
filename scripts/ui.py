@@ -36,6 +36,8 @@ def on_ui_tabs():
                                     gr.HTML(value="<p style='margin-bottom: 1.2em'>\
                                             -1 means that it is calculated automatically. If both are -1, the size will be the same as the source size. \
                                             </p>")
+                                    
+                                    frame_skip = gr.Textbox(label='Frame skip', lines=1, value = 2, precision=0, interactive=True)
 
                                     st1_masking_method_index = gr.Radio(label='Masking Method', choices=["transparent-background","clipseg","transparent-background AND clipseg"], value="transparent-background", type="index")
 
@@ -131,6 +133,7 @@ def on_ui_tabs():
 
                     frame_width,
                     frame_height,
+                    frame_skip,
                     st1_masking_method_index,
                     st1_mask_threshold,
                     tb_use_fast_mode,
