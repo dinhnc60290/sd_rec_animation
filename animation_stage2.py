@@ -4,6 +4,7 @@ import glob
 import shutil
 import numpy as np
 import math
+import re
 
 #---------------------------------
 # Copied from PySceneDetect
@@ -115,6 +116,14 @@ def remove_pngs_in_dir(path):
     pngs = glob.glob( os.path.join(path, "*.png") )
     for png in pngs:
         os.remove(png)
+def rec_animation_stage2_rename(dbg, project_args, folder_name):
+    project_code, project_dir, original_movie_url, original_movie_path, frame_path, frame_mask_path, _, _, _ = project_args
+    folder_path = os.path.join(project_dir, project_code, folder_name)
+    for filename in os.listdir(folder_path):
+        if re.search("-0000", filename):
+            new_filename = re.sub("-0000", "", filename)
+            os.rename(os.path.join(folder_path, filename), os.path.join(folder_path, new_filename))
+    dbg.print("completed.")
 
 def ebsynth_utility_stage2(dbg, project_args, key_min_gap, key_max_gap, key_th, key_add_last_frame, is_invert_mask):
     dbg.print("stage2")

@@ -60,6 +60,7 @@ def on_ui_tabs():
                                         clipseg_mask_blur_size2 = gr.Slider(minimum=0, maximum=150, step=1, label='Mask Blur Kernel Size(GaussianBlur)', value=11)
 
                                 with gr.TabItem(label="stage 2", elem_id='ebs_configuration_tab2'):
+                                    folder_name = gr.Textbox(label='Folder To Re-name', lines=1, placeholder="Folder to rename", value = "video_frame3")
                                     key_min_gap = gr.Slider(minimum=0, maximum=500, step=1, label='Minimum keyframe gap', value=10)
                                     key_max_gap = gr.Slider(minimum=0, maximum=1000, step=1, label='Maximum keyframe gap', value=300)
                                     key_th = gr.Slider(minimum=0.0, maximum=100.0, step=0.1, label='Threshold of delta frame edge', value=8.5)
@@ -130,10 +131,10 @@ def on_ui_tabs():
                     project_dir,
                     original_movie_url,
                     original_movie_path,
-
+                    frame_skip,
                     frame_width,
                     frame_height,
-                    frame_skip,
+                  
                     st1_masking_method_index,
                     st1_mask_threshold,
                     tb_use_fast_mode,
@@ -144,6 +145,7 @@ def on_ui_tabs():
                     clipseg_mask_blur_size,
                     clipseg_mask_blur_size2,
 
+                    folder_name,
                     key_min_gap,
                     key_max_gap,
                     key_th,
