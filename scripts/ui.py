@@ -15,7 +15,7 @@ def on_ui_tabs():
                     with gr.Tabs(elem_id="ebs_settings"):
                         with gr.TabItem('project setting', elem_id='ebs_project_setting', ):
                             project_code = gr.Textbox(label='Project code', lines=1, placeholder="BTS Jimin 7", value = "BTS Jimin 7")
-                            project_dir = gr.Textbox(label='Project directory', lines=1, placeholder="D:\AI\project_videos", value="D:\AI\project_videos")
+                            project_dir = gr.Textbox(label='Project directory', lines=1, placeholder="D:\AI\project_videos", value="/content/drive/MyDrive/tiktok_projects/")
                             original_movie_url = gr.Textbox(label='Original Movie Url', lines=1, placeholder="https://vt.tiktok.com/ZS8tUTx74/", value = "https://vt.tiktok.com/ZS8tUTx74/" ) 
                             original_movie_path = gr.Textbox(label='Original Movie Path', lines=1, placeholder="https://vt.tiktok.com/ZS8tUTx74/", value = project_dir.value + "\\" + project_code.value + "\\video.mp4") 
 
