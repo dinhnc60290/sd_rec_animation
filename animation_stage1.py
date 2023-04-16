@@ -187,7 +187,7 @@ def create_mask_transparent_background(input_dir, output_dir, tb_use_fast_mode, 
             os.rename(mask, os.path.join(output_dir, m.group(1) + ".png"))
 
 
-def dowload_video(original_movie_url: str, project_dir: str, project_code: str):
+def dowload_video(original_movie_url: str, project_dir: str, project_code: str, dbg):
     video_project_path = os.path.join(project_dir, project_code)
     filename = "video.mp4"
     if "MyDrive" in original_movie_url:
@@ -236,6 +236,7 @@ def dowload_video(original_movie_url: str, project_dir: str, project_code: str):
     audio.write_audiofile(os.path.join(video_project_path, "audio.mp3"))
     with open(os.path.join(video_project_path, "info.txt"), 'w') as file:
         file.write(caption)
+    dbg.print("stage1")
     print("Video download complete!")
 
 
@@ -294,7 +295,7 @@ def rec_animation_stage1(dbg, project_args, frame_skip: int, frame_width: int, f
 
     # remove_pngs_in_dir(frame_path)
 
-    dowload_video(original_movie_url, project_dir, project_code)
+    dowload_video(original_movie_url, project_dir, project_code, dbg)
     create_frame(project_dir, project_code, frame_path, frame_skip)
 
     if frame_mask_path:
