@@ -236,7 +236,7 @@ def dowload_video(original_movie_url: str, project_dir: str, project_code: str, 
     audio.write_audiofile(os.path.join(video_project_path, "audio.mp3"))
     with open(os.path.join(video_project_path, "info.txt"), 'w') as file:
         file.write(caption)
-    dbg.print("stage1")
+    dbg.print("caption: " + caption)
     print("Video download complete!")
 
 
