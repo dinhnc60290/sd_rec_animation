@@ -15,6 +15,7 @@ from moviepy.editor import *
 import requests
 import urllib.request
 import json
+from urllib.parse import urlparse
 
 
 def resize_img(img, w, h):
@@ -211,23 +212,44 @@ def dowload_video(original_movie_url: str, project_dir: str, project_code: str, 
             video_url, os.path.join(video_project_path, filename))
 
     elif "youtube" in original_movie_url:
-        # Create a YouTube object and get the video stream with the highest resolution
-        youtube = pytube.YouTube(original_movie_url)
-        caption = youtube.title
-        video = youtube.streams.get_highest_resolution()
-        # Define the file path where the video will be saved
-        # Download the video to the specified file path
-        out_file = video.download(
-            filename="video.mp4", output_path=video_project_path)
-        html = youtube.watch_html
-        doc = pq(html)
+        # remove the query string from the URL
+        url_no_query = urlparse(original_movie_url)._replace(query=None).geturl()
+
+        # get the last path component of the URL
+        video_id = os.path.basename(urlparse(url_no_query).path)
+        print(video_id)
+
+        url = "https://youtube-media-downloader.p.rapidapi.com/v2/video/details"
+        querystring = {"videoId":video_id}
+        headers = {
+            "X-RapidAPI-Key": "ed93aabe90msh5e506ae335eb5f9p1b2bc7jsna523689aded7",
+            "X-RapidAPI-Host": "youtube-media-downloader.p.rapidapi.com"
+        }
+        response = requests.get(url, headers=headers, params=querystring)
+        json_data = json.loads(response.text)
+        caption = json_data["title"]
+        list_video = json_data["videos"]["items"]
+        # Filter the items based on the criteria
+        filtered_items = [item for item in list_video if item['extension'] == 'mp4' and item['hasAudio'] and item['width'] == max([item['width'] for item in list_video if item['extension'] == 'mp4' and item['hasAudio']]) and item['height'] == max([item['height'] for item in list_video if item['extension'] == 'mp4' and item['hasAudio']])]
+
+        # Get the item with the highest resolution
+        highest_resolution_item = max(filtered_items, key=lambda x: x['width'] * x['height'])
+
+        # Print the result
+        video_url = highest_resolution_item["url"]
+
+        if not os.path.exists(video_project_path):
+            os.makedirs(video_project_path)
+        urllib.request.urlretrieve(
+            video_url, os.path.join(video_project_path, filename))
+        
         hashtags = []
-        description = doc("meta[name='description']").attr("content")
+        description = json_data["description"]
         if description is not None:
             for tag in description.split("#")[1:]:
                 hashtags.append(tag.strip())
         caption = caption + str(hashtags)
-
+        
     # Load the video file
     video = VideoFileClip(os.path.join(video_project_path, filename))
     # Extract the audio from the video

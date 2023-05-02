@@ -20,7 +20,7 @@ import glob
 import requests
 import json
 import re
-from extensions.ebsynth_utility.calculator import CalcParser,ParseError
+from extensions.sd_rec_animation.calculator import CalcParser,ParseError
 
 def get_my_dir():
     if os.path.isdir("extensions/sd_rec_animation"):
