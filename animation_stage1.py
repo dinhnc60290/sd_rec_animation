@@ -262,7 +262,7 @@ def dowload_video(original_movie_url: str, project_dir: str, project_code: str, 
     print("Video download complete!")
 
 
-def create_frame(project_dir: str, project_code: str, frame_path: str, frame_skip: int):
+def create_frame(project_dir: str, project_code: str, frame_path: str, frame_skip: int, dbg):
     video_project_path = os.path.join(project_dir, project_code)
     video_path = os.path.join(video_project_path, "video.mp4")
     video_capture = cv2.VideoCapture(video_path)
@@ -299,6 +299,7 @@ def create_frame(project_dir: str, project_code: str, frame_path: str, frame_ski
     except:
         print('Error in create frames')
     print('Finish create frames')
+    dbg.print("Frame path: " + frame_path)
 
 def rec_animation_stage1(dbg, project_args, frame_skip: int, frame_width: int, frame_height: int, st1_masking_method_index, st1_mask_threshold, tb_use_fast_mode, tb_use_jit, clipseg_mask_prompt, clipseg_exclude_prompt, clipseg_mask_threshold, clipseg_mask_blur_size, clipseg_mask_blur_size2, is_invert_mask):
     dbg.print("stage1")
@@ -318,7 +319,7 @@ def rec_animation_stage1(dbg, project_args, frame_skip: int, frame_width: int, f
     # remove_pngs_in_dir(frame_path)
 
     dowload_video(original_movie_url, project_dir, project_code, dbg)
-    create_frame(project_dir, project_code, frame_path, frame_skip)
+    create_frame(project_dir, project_code, frame_path, frame_skip, dbg)
 
     if frame_mask_path:
         remove_pngs_in_dir(frame_mask_path)
